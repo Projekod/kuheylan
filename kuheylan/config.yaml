@@ -1,0 +1,36 @@
+---
+kuheylan-default:
+  vm:
+    box: projekod/kuheylan
+    box_url: projekod/kuheylan
+    hostname: 'projekodVM'
+    memory: '512'
+    cpus: '1'
+    network:
+      private_network: 192.168.50.101
+      forwarded_port:
+        01:
+          host: '9015'
+          guest: '9015'
+    synced_folder:
+      01:
+        owner: www-data
+        group: www-data
+        source: 'c:\www'
+        target: /var/www
+        sync_type: default
+        rsync:
+            args:
+              - '--verbose'
+              - '--archive'
+              - '-z'
+            exclude:
+              - .vagrant/
+            auto: 'false'
+    sites:
+        - name: kuheylan.dev
+          dir:  /var/www/html
+        - name: pointro.dev
+          dir:  /var/www/pointro/web/
+    databases:
+        - kuheylan
